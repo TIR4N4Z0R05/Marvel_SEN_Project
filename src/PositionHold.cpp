@@ -46,13 +46,17 @@ ros::spinOnce();
 bool Checkstate(PositionH::PH_RK::Request &req, PositionH::PH_RK::Response &res){
 kill=req.kill;
 start=req.run;
-res.done=kill; // kill status if it was 1 means that position hold program is off and when its be 0 means that this program running properly and publishing data to specific path this change apply for managing band width usage and saving power of robot
+res.done=kill; // kill status if it was 1 means that position hold program is off and when its be 0 means that this program running properly and publishing data to specific path this change apply for 		  managing band width usage and saving power of robot
 result=res.done;
 	if (kill==1 && start==0){
 		result=1;
+		cout << "Kill state" << endl;
 				}
-		else{
-		result=0;
+		else if (kill==0 && start==0){
+		result=2;
+				}
+		else if(kill==0 && start==1){
+                cout << "publishing state" << endl;
 		    }
 return true;
 }
