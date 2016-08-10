@@ -38,6 +38,7 @@ PHmsg.data[0]=deltaX;
 PHmsg.data[1]=deltaY;
 PHmsg.data[2]=deltaZ;
 if (result==0){
+i=1;
 pub.publish(PHmsg);
 }
 ros::spinOnce();
