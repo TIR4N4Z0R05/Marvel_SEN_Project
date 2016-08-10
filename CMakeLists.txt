@@ -30,5 +30,5 @@ rosbuild_gensrv()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 #rosbuild_add_executable(example examples/example.cpp)
 rosbuild_add_executable(PH src/PositionHold.cpp)
-rosbuild_add_executable(server src/test.cpp)
+
 #target_link_libraries(example ${PROJECT_NAME})
