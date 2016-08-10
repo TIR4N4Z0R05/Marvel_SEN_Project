@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 2.4.6)
-project(PH)
+project(Marvel_SEN_project)
+
+find_package(PCL 1.7 REQUIRED)
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 # Set the build type.  Options are:
@@ -30,5 +35,6 @@ rosbuild_gensrv()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 #rosbuild_add_executable(example examples/example.cpp)
 rosbuild_add_executable(PH src/PositionHold.cpp)
-
+rosbuild_add_executable(PH src/test1.cpp)
+target_link_libraries(rtab_costmap ${PCL_LIBRARIES})
 #target_link_libraries(example ${PROJECT_NAME})
