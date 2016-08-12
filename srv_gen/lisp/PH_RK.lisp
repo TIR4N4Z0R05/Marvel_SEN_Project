@@ -1,7 +1,7 @@
 ; Auto-generated. Do not edit!
 
 
-(cl:in-package PositionH-srv)
+(cl:in-package Marvel_SEN_Project-srv)
 
 
 ;//! \htmlinclude PH_RK-request.msg.html
@@ -25,16 +25,16 @@
 (cl:defmethod cl:initialize-instance :after ((m <PH_RK-request>) cl:&rest args)
   (cl:declare (cl:ignorable args))
   (cl:unless (cl:typep m 'PH_RK-request)
-    (roslisp-msg-protocol:msg-deprecation-warning "using old message class name PositionH-srv:<PH_RK-request> is deprecated: use PositionH-srv:PH_RK-request instead.")))
+    (roslisp-msg-protocol:msg-deprecation-warning "using old message class name Marvel_SEN_Project-srv:<PH_RK-request> is deprecated: use Marvel_SEN_Project-srv:PH_RK-request instead.")))
 
 (cl:ensure-generic-function 'kill-val :lambda-list '(m))
 (cl:defmethod kill-val ((m <PH_RK-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader PositionH-srv:kill-val is deprecated.  Use PositionH-srv:kill instead.")
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader Marvel_SEN_Project-srv:kill-val is deprecated.  Use Marvel_SEN_Project-srv:kill instead.")
   (kill m))
 
 (cl:ensure-generic-function 'run-val :lambda-list '(m))
 (cl:defmethod run-val ((m <PH_RK-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader PositionH-srv:run-val is deprecated.  Use PositionH-srv:run instead.")
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader Marvel_SEN_Project-srv:run-val is deprecated.  Use Marvel_SEN_Project-srv:run instead.")
   (run m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <PH_RK-request>) ostream)
   "Serializes a message object of type '<PH_RK-request>"
@@ -69,10 +69,10 @@
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<PH_RK-request>)))
   "Returns string type for a service object of type '<PH_RK-request>"
-  "PositionH/PH_RKRequest")
+  "Marvel_SEN_Project/PH_RKRequest")
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql 'PH_RK-request)))
   "Returns string type for a service object of type 'PH_RK-request"
-  "PositionH/PH_RKRequest")
+  "Marvel_SEN_Project/PH_RKRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<PH_RK-request>)))
   "Returns md5sum for a message object of type '<PH_RK-request>"
   "6865b3b355b3986f0576674e606efbad")
@@ -112,11 +112,11 @@
 (cl:defmethod cl:initialize-instance :after ((m <PH_RK-response>) cl:&rest args)
   (cl:declare (cl:ignorable args))
   (cl:unless (cl:typep m 'PH_RK-response)
-    (roslisp-msg-protocol:msg-deprecation-warning "using old message class name PositionH-srv:<PH_RK-response> is deprecated: use PositionH-srv:PH_RK-response instead.")))
+    (roslisp-msg-protocol:msg-deprecation-warning "using old message class name Marvel_SEN_Project-srv:<PH_RK-response> is deprecated: use Marvel_SEN_Project-srv:PH_RK-response instead.")))
 
 (cl:ensure-generic-function 'done-val :lambda-list '(m))
 (cl:defmethod done-val ((m <PH_RK-response>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader PositionH-srv:done-val is deprecated.  Use PositionH-srv:done instead.")
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader Marvel_SEN_Project-srv:done-val is deprecated.  Use Marvel_SEN_Project-srv:done instead.")
   (done m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <PH_RK-response>) ostream)
   "Serializes a message object of type '<PH_RK-response>"
@@ -139,10 +139,10 @@
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<PH_RK-response>)))
   "Returns string type for a service object of type '<PH_RK-response>"
-  "PositionH/PH_RKResponse")
+  "Marvel_SEN_Project/PH_RKResponse")
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql 'PH_RK-response)))
   "Returns string type for a service object of type 'PH_RK-response"
-  "PositionH/PH_RKResponse")
+  "Marvel_SEN_Project/PH_RKResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<PH_RK-response>)))
   "Returns md5sum for a message object of type '<PH_RK-response>"
   "6865b3b355b3986f0576674e606efbad")
@@ -170,4 +170,4 @@
   'PH_RK-response)
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql 'PH_RK)))
   "Returns string type for a service object of type '<PH_RK>"
-  "PositionH/PH_RK")
+  "Marvel_SEN_Project/PH_RK")
