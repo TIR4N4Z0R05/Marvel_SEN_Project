@@ -44,7 +44,7 @@ pub.publish(PHmsg);
 ros::spinOnce();
 }
 
-bool Checkstate(PositionH::PH_RK::Request &req, PositionH::PH_RK::Response &res){
+bool Checkstate(Marvel_SEN_Project::PH_RK::Request &req, Marvel_SEN_Project::PH_RK::Response &res){
 kill=req.kill;
 start=req.run;
 res.done=kill; // kill status if it was 1 means that position hold program is off and when its be 0 means that this program running properly and publishing data to specific path this change apply for managing band width usage and saving power of robot
