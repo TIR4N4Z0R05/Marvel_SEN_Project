@@ -4,6 +4,15 @@
 /bin
 /srv_gen
 /src/Marvel_SEN_Project
+/catkin
+/catkin_generated
+/CMakeFiles
+/devel
+/gtest
+/lib
+/test_results
+CMakeCache.txt
+cmake_install.cmake
 *~
 *autosave
 
