@@ -25,6 +25,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/eigen3"
   "/usr/include/ni"
   "include"
+  "/opt/ros/indigo/include"
+  "/usr/include/opencv"
   "/usr/src/gtest/include"
   "/usr/src/gtest"
   )

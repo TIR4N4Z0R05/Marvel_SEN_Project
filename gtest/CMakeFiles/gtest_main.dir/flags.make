@@ -6,5 +6,5 @@ CXX_FLAGS =   -Wno-deprecated -O2 -g -DNDEBUG -fPIC     -Wno-deprecated -Wall -W
 
 CXX_DEFINES = -DEIGEN_USE_NEW_STDVECTOR -DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET -DFLANN_STATIC -DGTEST_CREATE_SHARED_LIBRARY=1 -DROS_PACKAGE_NAME=\"Marvel_SEN_Project\" -Dgtest_main_EXPORTS -Dqh_QHpointer
 
-CXX_INCLUDES = -I/usr/include/vtk-5.8 -I/usr/include/pcl-1.7 -I/usr/include/eigen3 -I/usr/include/ni -I/home/hossein/Workspace/sandbox/Marvel_SEN_Project/include -I/usr/src/gtest/include -I/usr/src/gtest 
+CXX_INCLUDES = -I/usr/include/vtk-5.8 -I/usr/include/pcl-1.7 -I/usr/include/eigen3 -I/usr/include/ni -I/home/hossein/Workspace/sandbox/Marvel_SEN_Project/include -I/opt/ros/indigo/include -I/usr/include/opencv -I/usr/src/gtest/include -I/usr/src/gtest 
 

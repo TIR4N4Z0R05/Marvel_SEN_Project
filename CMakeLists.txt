@@ -38,6 +38,6 @@ rosbuild_add_executable(PH src/PositionHold.cpp)
 rosbuild_add_executable(test src/test1.cpp)
 rosbuild_add_executable(Converter src/ConvertToEuler.cpp)
 rosbuild_add_executable(2dMap src/ReadMap.cpp)
+target_link_libraries(2dMap ${PCL_LIBRARIES})
 
-#target_link_libraries(test1 ${PCL_LIBRARIES})
 #target_link_libraries(example ${PROJECT_NAME})
