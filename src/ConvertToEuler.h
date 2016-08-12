@@ -7,21 +7,16 @@
 #include "nav_msgs/Odometry.h"
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/TwistWithCovariance.h"
-#include "Marvel_SEN_Project/PH_RK.h"
 #include <string>
 #include "licence.h"
+#include <math.h>
+#include "Marvel_SEN_Project/Eulerdata.h"
 
-// Initializing variable
-float x,y,z,xg,yg,zg;
-float deltaX,deltaY,deltaZ;
-int i=1;
-const float Initialh=1;
-int kill,start,result;
 
-//Initializing ros msg
-std_msgs::Float64MultiArray PHmsg;
+
 ros::Publisher pub;
+Marvel_SEN_Project::Eulerdata Eulerangle_msg;
 
-// defining header of function
-void PositionHold();
-bool Checkstate();
+void RmatriX();
+void convertionToEulerian();
+float RadtoDeg(float rad);

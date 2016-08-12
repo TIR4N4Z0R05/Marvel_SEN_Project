@@ -27,7 +27,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined services
 #rosbuild_gensrv()
 rosbuild_gensrv()
-
+rosbuild_genmsg()
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
@@ -36,5 +36,6 @@ rosbuild_gensrv()
 #rosbuild_add_executable(example examples/example.cpp)
 rosbuild_add_executable(PH src/PositionHold.cpp)
 rosbuild_add_executable(PH src/test1.cpp)
+rosbuild_add_executable(Converter src/ConvertToEuler.cpp)
 target_link_libraries(rtab_costmap ${PCL_LIBRARIES})
 #target_link_libraries(example ${PROJECT_NAME})
