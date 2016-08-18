@@ -36,7 +36,7 @@ using namespace std;
 //nodehandle stuff/*****************************************************************************
    ros::init(argc, argv, "sub_pcl");
    ros::NodeHandle nh;
-   ros::Subscriber sub = nh.subscribe<nav_msgs::OccupancyGrid>("/rtabmap/proj_map", 1, callback);
+   ros::Subscriber sub = nh.subscribe<nav_msgs::OccupancyGrid>("/Marvel/new_map", 1, callback);
    ros::spin();
  }
 

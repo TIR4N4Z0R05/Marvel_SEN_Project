@@ -8,6 +8,7 @@ using namespace mrpt::poses;
 using namespace std;
 
 void getmapdata (const sensor_msgs::PointCloud2::ConstPtr&input){
+
     pcl::PCLPointCloud2 pcl_pc2;
     pcl_conversions::toPCL(*input,pcl_pc2);
     pcl::PointCloud<pcl::PointXYZ>::Ptr temp_cloud(new pcl::PointCloud<pcl::PointXYZ>);
@@ -15,38 +16,49 @@ void getmapdata (const sensor_msgs::PointCloud2::ConstPtr&input){
 
     cout << "gotit" << endl;
 
-    if(z-z0>0.3){
+    //if(z-z0>0.3){
 	//cout << "clearing" << endl;
-	z0 = z;
+	//z0 = z;
     	clear_grid();
-    }
+    //}
     lines.resize(0);
+    int n;
+    bool isResized = false;
 
     for(unsigned int i=0;i<temp_cloud->points.size();i++){
-	if(temp_cloud->points.at(i).z > z-0.2 && temp_cloud->points.at(i).z < z+0.2){
-		grid_x = temp_cloud->points.at(i).x/PP_grid.info.resolution + PP_grid.info.width/2;
-		grid_y = temp_cloud->points.at(i).y/PP_grid.info.resolution + PP_grid.info.height/2;
+	if(temp_cloud->points.at(i).z > z-0.1 && temp_cloud->points.at(i).z < z+0.1){
+		grid_x = temp_cloud->points.at(i).x/PP_grid.info.resolution + PP_grid.info.width/2 - 1;
+		grid_y = temp_cloud->points.at(i).y/PP_grid.info.resolution + PP_grid.info.height/2 - 1;
 
 		xs.push_back(temp_cloud->points.at(i).x);
 		ys.push_back(temp_cloud->points.at(i).y);
 
-		/*if(grid_x<0 || grid_x>=PP_grid.info.width){
+		if(grid_x<=0 || grid_x>=PP_grid.info.width){
 			PP_grid.info.width = PP_grid.info.width + abs(grid_x - PP_grid.info.width);
 			PP_grid.info.origin.position.x = -(PP_grid.info.width/2)*PP_grid.info.resolution;
-			PP_grid.data.resize(PP_grid.info.height * PP_grid.info.width);
+			isResized = true;
+			
 		}
-		if(grid_y<0 || grid_y>=PP_grid.info.height){
+		if(grid_y<=0 || grid_y>=PP_grid.info.height){
 			PP_grid.info.height = PP_grid.info.height + abs(grid_y - PP_grid.info.height);
 			PP_grid.info.origin.position.y = (PP_grid.info.height/2)*PP_grid.info.resolution;
-			PP_grid.data.resize(PP_grid.info.height * PP_grid.info.width);
-		}*/
+			isResized = true;
+		}
+
+		if(isResized == true){
+			n = (PP_grid.info.height * PP_grid.info.width) - PP_grid.data.size();
+			for(int j=0; j<n ; j++){
+				PP_grid.data.push_back(-1);
+			}
+			isResized = false;
+		}
 		
 		PP_grid.data.at( (grid_y-1)*PP_grid.info.width + grid_x ) = 100;
 		
 	}
     }
     //ransac_filter();
-    draw();
+    //draw();
     pub.publish(PP_grid);
     ros::spinOnce();
 
@@ -62,12 +74,14 @@ void chatterCallback(const nav_msgs::Odometry::ConstPtr&msg)
 
 int main (int argc, char **argv){
 //instializing opengl/***************************************************************************
-   glutInit(&argc, argv);
+  
+/* glutInit(&argc, argv);
    glutInitWindowSize(640,640);
    glutInitWindowPosition(50,25);
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB );
    glutCreateWindow("Map_View");
    glOrtho(0,640,640,0,-1,1);
+*/
 //nodehandle stuff/*****************************************************************************
 
 tr_init();
@@ -79,7 +93,7 @@ ros::init(argc, argv, "ReadMaP");
 ros::NodeHandle n;
 ros::Subscriber sub = n.subscribe("/rtabmap/octomap_cloud", 1000, getmapdata);
 ros::Subscriber sub1 = n.subscribe("/rtabmap/odom", 1000, chatterCallback);
-pub = n.advertise<nav_msgs::OccupancyGrid>("new_map", 1000);
+pub = n.advertise<nav_msgs::OccupancyGrid>("Marvel/new_map", 1000);
 ros::spin();
 }
 

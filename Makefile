@@ -155,6 +155,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named CM
+
+# Build rule for target.
+CM: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CM
+.PHONY : CM
+
+# fast build rule for target.
+CM/fast:
+	$(MAKE) -f CMakeFiles/CM.dir/build.make CMakeFiles/CM.dir/build
+.PHONY : CM/fast
+
+#=============================================================================
 # Target rules for targets named 2dMap
 
 # Build rule for target.
@@ -612,6 +625,33 @@ src/ReadMap.cpp.s:
 	$(MAKE) -f CMakeFiles/2dMap.dir/build.make CMakeFiles/2dMap.dir/src/ReadMap.cpp.s
 .PHONY : src/ReadMap.cpp.s
 
+src/costmap.o: src/costmap.cpp.o
+
+.PHONY : src/costmap.o
+
+# target to build an object file
+src/costmap.cpp.o:
+	$(MAKE) -f CMakeFiles/CM.dir/build.make CMakeFiles/CM.dir/src/costmap.cpp.o
+.PHONY : src/costmap.cpp.o
+
+src/costmap.i: src/costmap.cpp.i
+
+.PHONY : src/costmap.i
+
+# target to preprocess a source file
+src/costmap.cpp.i:
+	$(MAKE) -f CMakeFiles/CM.dir/build.make CMakeFiles/CM.dir/src/costmap.cpp.i
+.PHONY : src/costmap.cpp.i
+
+src/costmap.s: src/costmap.cpp.s
+
+.PHONY : src/costmap.s
+
+# target to generate assembly for a file
+src/costmap.cpp.s:
+	$(MAKE) -f CMakeFiles/CM.dir/build.make CMakeFiles/CM.dir/src/costmap.cpp.s
+.PHONY : src/costmap.cpp.s
+
 src/test1.o: src/test1.cpp.o
 
 .PHONY : src/test1.o
@@ -650,6 +690,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... install"
 	@echo "... install/strip"
+	@echo "... CM"
 	@echo "... 2dMap"
 	@echo "... rospack_gensrv_all"
 	@echo "... download_extra_data"
@@ -689,6 +730,9 @@ help:
 	@echo "... src/ReadMap.o"
 	@echo "... src/ReadMap.i"
 	@echo "... src/ReadMap.s"
+	@echo "... src/costmap.o"
+	@echo "... src/costmap.i"
+	@echo "... src/costmap.s"
 	@echo "... src/test1.o"
 	@echo "... src/test1.i"
 	@echo "... src/test1.s"
