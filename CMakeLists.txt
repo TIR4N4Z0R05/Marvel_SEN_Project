@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 2.4.6)
-project(Marvel_SEN_project)
-
+include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+project( MARVEL_SEN_PROJECT )
+find_package( OpenCV 2 REQUIRED )
 find_package(PCL 1.7 REQUIRED)
 find_package(MRPT REQUIRED)
+find_package( Boost REQUIRED COMPONENTS program_options regex )
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 # Set the build type.  Options are:
 #  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
@@ -15,6 +16,10 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 #  RelWithDebInfo : w/ debug symbols, w/ optimization
 #  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
 #set(ROS_BUILD_TYPE RelWithDebInfo)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories( ${Boost_INCLUDE_DIRS} )
+include_directories( ${SDL2_INCLUDE_DIRS} )
 
 rosbuild_init()
 
@@ -31,16 +36,24 @@ rosbuild_gensrv()
 rosbuild_genmsg()
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
+
+
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
-#rosbuild_add_executable(example examples/example.cpp)
+#rosbuild_add_executable(out src/talker.cpp)
 rosbuild_add_executable(PH src/PositionHold.cpp)
-rosbuild_add_executable(test src/test1.cpp)
+rosbuild_add_executable(permanent src/permanent.cpp)
 rosbuild_add_executable(Converter src/ConvertToEuler.cpp)
-rosbuild_add_executable(2dMap src/ReadMap.cpp)
+rosbuild_add_executable(2D_map src/ReadMap.cpp)
 rosbuild_add_executable(CM src/costmap.cpp)
-target_link_libraries(2dMap ${PCL_LIBRARIES} ${MRPT_LIBS})
-target_link_libraries(2dMap GL glut)
-target_link_libraries(CM GL glut)
+rosbuild_add_executable(ANT src/ANT.cpp)
+rosbuild_add_executable(interface src/interface.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
+#target_link_libraries( out ${OpenCV_LIBS} )
+target_link_libraries(2D_map ${OpenCV_LIBS} ${PCL_LIBRARIES} ${MRPT_LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_REGEX_LIBRARY})
+target_link_libraries(CM ${OpenCV_LIBS} ${PCL_LIBRARIES} ${MRPT_LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_REGEX_LIBRARY})
+target_link_libraries(ANT ${OpenCV_LIBS} ${PCL_LIBRARIES} ${MRPT_LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_REGEX_LIBRARY} ${SDL2_LIBRARIES})
+target_link_libraries(interface ${OpenCV_LIBS} ${PCL_LIBRARIES} ${MRPT_LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_REGEX_LIBRARY} ${SDL2_LIBRARIES})
+target_link_libraries(2D_map GL glut)
+target_link_libraries(CM GL glut)
+target_link_libraries(ANT GL glut)

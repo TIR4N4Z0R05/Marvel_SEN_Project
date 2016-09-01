@@ -13,42 +13,44 @@ using namespace std;
  	height = msg->info.height;
  	reso = msg->info.resolution;
 
- 	grid.resize(msg->data.size());
-
+    grid.resize(msg->data.size());
     for(int i=0 ; i < msg->data.size() ; i++){
     	grid.at(i) = msg->data.at(i);
     }
 
     create_safe_zone();
+    grid_msg.info.width = width;
+    grid_msg.info.height = height;
+    grid_msg.info.resolution = reso;
+    grid_msg.data.resize(grid.size());
+    for(int i=0 ; i < grid.size() ; i++){
+    	grid_msg.data.at(i) = grid.at(i);
+    }
+    pub.publish(grid_msg);
+    ros::spinOnce();
 
-    draw();
+    //draw();
  }
  
  int main(int argc, char** argv)
  {
-//instializing opengl/***************************************************************************
-   glutInit(&argc, argv);
-   glutInitWindowSize(640,640);
-   glutInitWindowPosition(50,25);
-   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB );
-   glutCreateWindow("Map_View");
-   glOrtho(0,640,640,0,-1,1);
-//nodehandle stuff/*****************************************************************************
    ros::init(argc, argv, "sub_pcl");
    ros::NodeHandle nh;
-   ros::Subscriber sub = nh.subscribe<nav_msgs::OccupancyGrid>("/Marvel/new_map", 1, callback);
+   ros::Subscriber sub = nh.subscribe<nav_msgs::OccupancyGrid>("/AUTMAV/new_map", 10, callback);
+   pub = nh.advertise<nav_msgs::OccupancyGrid>("AUTMAV/costmap", 1000);
    ros::spin();
  }
 
 void create_safe_zone(){
 	float dis;
+	grid_borders();
 	for(int i=0; i<height ; i++){
 		for(int j=0; j < width ; j++ ){
 			if(grid.at(i*width + j) == 100){
 				for(int k=0; k<height ; k++){
 					for(int l=0; l < width ; l++ ){
 						dis = find_dis(j,l,i,k);
-						if( dis< 0.4 && dis!=0 && grid.at(k*width + l) != 100){
+						if( dis< 0.1 && dis!=0 && grid.at(k*width + l) != 100){
 							grid.at(k*width + l) = -50;
 						}
 					}
@@ -71,33 +73,16 @@ float find_dis(int grid_x1, int grid_x2, int grid_y1, int grid_y2){
 	return dis;
 }
 
-void draw(){
-	glClear(GL_COLOR_BUFFER_BIT );
-	glBegin(GL_POINTS);
-
-	int dis_x = 320 - width/2;
-	int dis_y = 320 - height/2; 
-
-	for (int i = 0; i < height; i++){
-		for (int j = 0; j < width; j++){
-
-			if(grid.at(i*width + j) == 0 || grid.at(i*width + j) == -1){
-				glColor3f(0,0,100);
-			}
-
-			if(grid.at(i*width + j) == 100){
-				glColor3f(0,200,0);
-			}
-
-			if(grid.at(i*width + j) == -50){
-				glColor3f(200,0,0);
-			}
-
-			glVertex3f(dis_x + j,dis_y + i,0);
-		}
+void grid_borders(){
+	for (int i = 0; i < width; i++){
+		grid.at(i) = -50;
+		grid.at((height-1)*width +i) = -50;
 	}
 
-	glEnd();
-  	glFlush();
+	for (int i = 0; i < height; i++){
+		if(i != height - 1)
+			grid.at(i*width) = -50;
+		if(i != 0)
+			grid.at(i*width - 1) = -50;
+	}
 }
-

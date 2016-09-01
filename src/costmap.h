@@ -13,9 +13,9 @@
 #include <pcl/point_types.h>
 #include <ros/ros.h>
 #include <nav_msgs/GetMap.h>
+#include <nav_msgs/OccupancyGrid.h>
 #include <costmap_2d/costmap_2d_ros.h>
 #include <costmap_2d/costmap_2d.h>
-#include <navfn/navfn_ros.h> 
 #include <GL/glut.h>
 
 using namespace std;
@@ -23,8 +23,10 @@ using namespace std;
 vector <int> grid;
 int width, height;
 float reso;
+nav_msgs::OccupancyGrid grid_msg;
 
 void create_safe_zone();
 float find_dis(int, int, int, int);
 void draw();
+void grid_borders();
 

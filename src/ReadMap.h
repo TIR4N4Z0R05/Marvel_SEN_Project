@@ -23,13 +23,13 @@
 #include <pcl/sample_consensus/method_types.h>
 #include <pcl_ros/transforms.h>
 #include <sensor_msgs/PointCloud2.h>
-#include "licence.h"
 #include <sensor_msgs/PointCloud2.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include "nav_msgs/Odometry.h"
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <time.h>
+#include <boost/thread/thread.hpp>
 
 
 
@@ -51,8 +51,6 @@ struct line{
 float z, z0;
 int grid_x, grid_y, grid_x1, grid_y1;
 vector <pcl::PointXYZ> grid_points;
-CVectorDouble xs,ys;
-CVectorDouble lxs,lys;
 nav_msgs::OccupancyGrid PP_grid;
 ros::Publisher pub;
 vector <line> lines;
@@ -67,3 +65,6 @@ void ransac_filter();
 void registerOnGrid(float x1, float x2, float y1, float y2);
 void tr_init();
 double grid_dis(int ,int ,int ,int);
+void draw_handle();
+void key_board_handler(unsigned char Key, int x, int y);
+void mouse_click_handler(int button, int state, int x, int y);
