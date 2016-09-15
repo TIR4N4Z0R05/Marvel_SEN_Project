@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="Marvel_SEN_Project" type="2D_map" name="ReadMap" />
+	<node pkg="Marvel_SEN_Project" type="CM" name="sub_pcl" />
+	<node pkg="Marvel_SEN_Project" type="ANT" name="ant" output="screen" />
+	
+</launch>

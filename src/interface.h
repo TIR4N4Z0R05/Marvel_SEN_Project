@@ -24,9 +24,12 @@ struct g_point{
 vector <double> graphics_grid_model;
 vector <double> grid;
 unsigned int width, height;
+double reso;
 int dis_y;
 int dis_x;
 g_point desti;
+g_point current;
+bool odom_recieved;
 std_msgs::Float64MultiArray desti_msg;
 ros::Publisher pub;
 boost::mutex mtx;

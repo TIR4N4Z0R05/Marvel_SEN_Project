@@ -56,6 +56,7 @@ void carot_pub();
 
 unsigned int width, height;
 double reso;
+double former_size = 0;
 bool failure = false;
 bool anyWaysFound = false;
 bool odom_recieved = false;

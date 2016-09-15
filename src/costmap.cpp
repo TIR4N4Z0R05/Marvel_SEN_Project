@@ -50,7 +50,7 @@ void create_safe_zone(){
 				for(int k=0; k<height ; k++){
 					for(int l=0; l < width ; l++ ){
 						dis = find_dis(j,l,i,k);
-						if( dis< 0.1 && dis!=0 && grid.at(k*width + l) != 100){
+						if( dis< 0.4 && dis!=0 && grid.at(k*width + l) != 100){
 							grid.at(k*width + l) = -50;
 						}
 					}

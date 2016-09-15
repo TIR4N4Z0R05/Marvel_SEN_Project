@@ -15,9 +15,19 @@ void grid_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg){
 			grid.push_back(2001);
 		else
     			grid.push_back(msg->data.at(i));
-    	}	
+    	}
+	if(former_size == grid.size()){
+		for (int i = 0; i < best_path.size(); i++){
+			for(int j=best_path.at(i).y - 1; j<best_path.at(i).y + 2; j++){
+				for(int k=best_path.at(i).x - 1; k<best_path.at(i).x + 2; k++){
+					grid.at(j * width + k) = 2002;
+				}
+			}
+		}
+	}
+	former_size = grid.size();	
 	msg_grid.data.resize(0);
-	msg_grid.data.push_back(height); msg_grid.data.push_back(width); 
+	msg_grid.data.push_back(height); msg_grid.data.push_back(width); msg_grid.data.push_back(reso);/* msg_grid.data.push_back(st.x); msg_grid.data.push_back(st.y);*/
     	for(int i=0 ; i < grid.size(); i++){
 		msg_grid.data.push_back(grid.at(i));
     	}
@@ -39,6 +49,13 @@ void odom_callback(const nav_msgs::Odometry::ConstPtr& msg){
 void target_callback(const std_msgs::Float64MultiArray::ConstPtr& msg){
 	desti.x = msg->data.at(0);
 	desti.y = msg->data.at(1);
+
+	for (int i = 0; i < height; i++){
+		for (int j = 0; j < width; j++){
+			if ( grid.at(i*width + j) == 2002 )
+				grid.at(i*width + j) = 0;
+		}
+	}
 	
 	if(map_recieved ){
 		ROS_INFO("\nsending ants\n");
@@ -53,7 +70,7 @@ int main(int argc, char **argv){
    srand(time(0));
 
    msg_carot.data.resize(4,0);
-   boost::thread th(carot_pub);
+   //boost::thread th(carot_pub);
    	
    ros::init(argc, argv, "ant");
    ros::NodeHandle nh;
@@ -63,7 +80,6 @@ int main(int argc, char **argv){
    pub = nh.advertise<std_msgs::Float64MultiArray>("AUTMAV/grid", 1000);
    pub1 = nh.advertise<std_msgs::Float64MultiArray>("AUTMAV/carot", 1000);
    ros::spin();
-   th.join();
 
    return 0;
 }
@@ -107,18 +123,22 @@ void main_func(){
 	}
 	path_filter();
 	for (int i = 0; i < best_path.size(); i++){
-		grid.at(best_path.at(i).y * width + best_path.at(i).x) = 2002;
+		for(int j=best_path.at(i).y - 1; j<best_path.at(i).y + 2; j++){
+			for(int k=best_path.at(i).x - 1; k<best_path.at(i).x + 2; k++){
+				grid.at(j * width + k) = 2002;
+			}
+		}
 	}
 
 	msg_grid.data.resize(0);
-	msg_grid.data.push_back(height); msg_grid.data.push_back(width); 
+	msg_grid.data.push_back(height); msg_grid.data.push_back(width); msg_grid.data.push_back(reso); /*msg_grid.data.push_back(st.x); msg_grid.data.push_back(st.y);*/
     	for(int i=0 ; i < grid.size(); i++){
 		msg_grid.data.push_back(grid.at(i));
     	}
 	if(best_path.size() > 20){
-		mtx.lock();
 		msg_carot.data.at(0) = 1; msg_carot.data.at(1) = (best_path.at(20).x + 1 - width/2)*reso; msg_carot.data.at(2) = (best_path.at(20).y + 1 - height/2)*reso; 
-		mtx.unlock();
+		pub1.publish(msg_carot);
+		ros::spinOnce();
 	}
 	pub.publish(msg_grid);
 	ros::spinOnce();
@@ -251,10 +271,13 @@ void path_filter(){
 }
 
 void carot_pub(){
+	ROS_INFO("****************************");
 	while(ros::ok()){
+		mtx.lock();
 		if(msg_carot.data.at(0) == 1){
 			pub1.publish(msg_carot);
 			ros::spinOnce();
 		}
+		mtx.unlock();
 	}
 }
